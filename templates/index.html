@@ -1,0 +1,2385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    background-color: #c4d7fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #1a1a1a;
+    overflow-x: hidden;
+  }
+
+  .navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px;
+    z-index: 101;
+    position: relative;
+    background: #ffffff;
+  }
+
+  .hamburger {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    cursor: pointer;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .hamburger span {
+    display: block;
+    height: 6px;
+    width: 6px;
+    background: #111;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: translate(5px, 5px) scale(1.2); }
+  .hamburger.active span:nth-child(2) { transform: translate(-5px, 5px) scale(1.2); }
+  .hamburger.active span:nth-child(3) { transform: translate(5px, -5px) scale(1.2); }
+  .hamburger.active span:nth-child(4) { transform: translate(-5px, -5px) scale(1.2); }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    font-weight: 900;
+    font-size: 36px;
+    letter-spacing: -2px;
+    color: #000;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .logo img {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .sign-up {
+    font-weight: 500;
+    font-size: 15px;
+    color: #111;
+    text-decoration: none;
+    letter-spacing: -0.2px;
+  }
+
+  .layout-wrapper {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .widget {
+    position: relative;
+    width: 340px;
+  }
+
+  .back-tab {
+    position: absolute;
+    top: -40px;
+    left: 18px;
+    right: 18px;
+    height: 60px;
+    background: #ffffff;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.04);
+    z-index: 1;
+    border: 1px solid #f0f0f0;
+    border-bottom: none;
+  }
+
+  .back-tab.clickable {
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .back-tab.clickable:hover {
+    background: #f8f9fa;
+    color: #3b6ef6;
+  }
+
+  .card {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    padding: 16px;
+    width: 100%;
+    border: 1px solid #f3f3f3;
+  }
+
+  .tabs {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: #ffffff;
+    padding: 2px;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .tab.active {
+    background-color: #e5eeff;
+    color: #3b71fe;
+  }
+
+  .tab.inactive {
+    color: #666;
+    background: transparent;
+  }
+
+  .upload-primary {
+    background-color: #e2ebfc;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .upload-primary:hover {
+    background-color: #dae5f9;
+  }
+
+  .upload-primary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-plus {
+    width: 42px;
+    height: 42px;
+    background-color: #406cff;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .upload-primary h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .upload-primary p {
+    font-size: 13px;
+    color: #333;
+    letter-spacing: -0.1px;
+  }
+
+  .app-promo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #406cff;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .app-promo:hover {
+    background: #fafbff;
+  }
+
+  .app-promo-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    max-width: 90px;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+
+  .play-badge {
+    height: 38px;
+    border-radius: 4px;
+  }
+
+  .add-folders {
+    border: 1px solid #406cff;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .add-folders:hover {
+    background: #fafbff;
+  }
+
+  .folder-icon-wrapper {
+    padding: 16px 0 12px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .folder-icon {
+    width: 32px;
+    height: 22px;
+    background-color: #8fb1fe;
+    border-radius: 3px 4px 4px 4px;
+    position: relative;
+  }
+
+  .folder-icon::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 14px;
+    height: 5px;
+    background-color: #8fb1fe;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .folder-btn-plus {
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    background: #406cff;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 2px solid #ffffff;
+  }
+
+  .add-folders-text {
+    background-color: #fafafa;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #111;
+  }
+
+  .footer-links {
+    margin-top: 24px;
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+  }
+
+  .upgrade-link {
+    color: #a428ff;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: opacity 0.2s ease;
+  }
+  
+  .upgrade-link:hover {
+    opacity: 0.8;
+  }
+
+  .lightning-icon {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+
+  .widget-views {
+    position: relative;
+    width: 340px;
+  }
+
+  .view {
+    width: 100%;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+  }
+
+  .view.hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+  }
+
+  .view.visible {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .card-receive {
+    text-align: center;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .receive-image-container {
+    width: 100%;
+    height: 250px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .receive-image-container img,
+  .receive-image-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .receive-content {
+    padding: 24px 20px 32px 20px;
+  }
+
+  .receive-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .receive-text {
+    font-size: 15px;
+    color: #111;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    background-color: #3b6ef6;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover {
+    background-color: #2b5ae6;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    background-color: transparent;
+    color: #3b6ef6;
+    border: none;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-secondary:hover {
+    opacity: 0.8;
+  }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 72px);
+    background-color: rgba(196, 215, 250, 0.95);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+  
+  .mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 84px;
+    left: 16px;
+    right: 16px;
+    background: #ffffff;
+    border-radius: 20px;
+    z-index: 100;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  .mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-menu-list li {
+    padding: 0 24px;
+  }
+
+  .menu-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #f2f2f2;
+  }
+
+  .mobile-menu-list li:last-child .menu-link {
+    border-bottom: none;
+  }
+
+  .menu-link.blue {
+    color: #3b6ef6;
+  }
+
+  .submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 12px 0;
+    display: none;
+    border-bottom: 1px solid #f2f2f2;
+  }
+
+  .submenu.active {
+    display: block;
+  }
+
+  .submenu-link {
+    display: block;
+    padding: 12px 0;
+    text-decoration: none;
+    color: #4a4a4a;
+    font-size: 15px;
+  }
+  
+  .submenu-link:hover {
+    color: #111;
+  }
+
+  .submenu-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #3b6ef6;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 4px;
+  }
+
+  .chevron {
+    transition: transform 0.3s ease;
+  }
+
+  .menu-link.active .chevron {
+    transform: rotate(180deg);
+  }
+
+  .menu-link.active {
+    border-bottom-color: transparent;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  .preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .preloader img {
+    height: 80px;
+    width: auto;
+    animation: pulseFade 3s infinite ease-in-out;
+  }
+
+  @keyframes pulseFade {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  .preloader-2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #c4d7fa;
+    z-index: 9998;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  .preloader-2.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .loading-square {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #3b6ef6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* Login View Overlay */
+  #login-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  
+  #login-page.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .login-header {
+    padding: 24px 32px;
+    width: 100%;
+  }
+
+  .login-logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .login-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 20px;
+  }
+
+  .login-brand-title {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    margin-bottom: 40px;
+    color: #000;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login-sign-in-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 4px;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 32px;
+  }
+
+  .login-input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .login-input-field {
+    width: 100%;
+    padding: 24px 16px 8px 16px;
+    border: 1px solid #d4d4d4;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    transition: border 0.2s;
+    color: #111;
+    background: transparent;
+  }
+
+  .login-input-label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 15px;
+    color: #666;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    transform-origin: left top;
+  }
+
+  .login-input-field:focus {
+    border-color: #3b6ef6;
+  }
+
+  .login-input-field:focus + .login-input-label,
+  .login-input-field:not(:placeholder-shown) + .login-input-label {
+    transform: translateY(-8px) scale(0.75);
+    font-weight: 600;
+  }
+
+  .login-btn-continue {
+    width: 100%;
+    padding: 16px;
+    background-color: #b0c4f5;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    cursor: default;
+    transition: background-color 0.2s;
+  }
+
+  .login-btn-code {
+    width: 100%;
+    padding: 16px;
+    background-color: #ffffff;
+    color: #b3b3b3;
+    border: 1px solid #d4d4d4;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .login-btn-code:hover {
+    background-color: #fafafa;
+  }
+
+  .login-forgot-link {
+    font-size: 14px;
+    color: #4a4a4a;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-bottom: 32px;
+  }
+  
+  .login-forgot-link:hover {
+    color: #111;
+  }
+
+  .login-email-summary-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 18px 16px;
+    border: 1px solid #d4d4d4;
+    border-radius: 12px;
+    background: #fcfcfc;
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+
+  .login-email-summary-box.hidden {
+    display: none !important;
+  }
+
+  .login-email-summary-text {
+    font-weight: 500;
+    color: #111;
+  }
+
+  .login-email-edit-btn {
+    background: none;
+    border: none;
+    color: #3b6ef6;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .login-email-edit-btn:hover {
+    color: #2b5ae6;
+  }
+
+  .login-divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 24px;
+    color: #b3b3b3;
+    font-size: 13px;
+  }
+
+  .login-divider::before,
+  .login-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f0f0f0;
+  }
+
+  .login-divider::before {
+    margin-right: 16px;
+  }
+
+  .login-divider::after {
+    margin-left: 16px;
+  }
+
+  .login-btn-social {
+    width: 100%;
+    padding: 14px;
+    background-color: #ffffff;
+    color: #111;
+    border: 1px solid #666;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .login-btn-social:hover {
+    background-color: #f9f9f9;
+  }
+
+  .login-signup-prompt {
+    font-size: 14px;
+    color: #666;
+    margin-top: 16px;
+  }
+
+  .login-signup-link {
+    color: #111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  
+  .login-signup-link:hover {
+    text-decoration: none;
+  }
+
+  .login-footer {
+    width: 100%;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .login-footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin-left: 16px;
+  }
+
+  .login-footer-links a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 1024px) {
+    .navbar {
+      padding: 16px 20px;
+    }
+    .logo img {
+      height: 56px;
+    }
+    .sign-up {
+      display: none;
+    }
+    .widget {
+      width: 90vw;
+      max-width: 340px;
+    }
+    .login-box {
+      max-width: 90vw;
+      padding: 24px;
+    }
+    .login-header, .login-footer {
+      padding: 20px;
+    }
+    .login-main {
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .download-header {
+      padding: 0 16px;
+      height: 64px;
+      background: #111;
+    }
+    .download-logo img {
+      height: 56px !important;
+    }
+    .nav-capsule-center {
+      display: none !important;
+    }
+    .nav-capsule-right {
+      height: 40px;
+      padding: 0 8px;
+      margin-right: 0 !important;
+    }
+    .upgrade-text, .user-email-wrap {
+      display: none !important;
+    }
+    .user-badge {
+      border-left: none;
+      padding-left: 0;
+      gap: 0;
+    }
+    .download-body {
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: block;
+    }
+    .dl-left, .dl-center, .dl-right {
+      width: 100%;
+      padding: 16px;
+      flex: none;
+    }
+    .dl-left {
+      padding-top: 24px;
+    }
+    .dl-center {
+      padding: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      justify-content: flex-start;
+      padding-bottom: 20px;
+    }
+    .dl-right {
+      align-items: center;
+      gap: 24px;
+      padding-bottom: 200px; 
+    }
+    .file-pagination {
+      align-self: center;
+    }
+    .meta-info {
+      width: 100%;
+      max-width: 100%;
+    }
+    .btn-row {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #111;
+      padding: 16px 20px 24px 20px;
+      box-shadow: 0 -10px 20px rgba(0,0,0,0.5);
+      z-index: 100;
+      width: 100%;
+      max-width: none;
+      justify-content: center;
+    }
+    .main-download-btn, .star-btn {
+      height: 54px;
+    }
+    .doc-preview-card {
+      width: 480px;
+      margin: 0 auto;
+      flex-shrink: 0;
+      box-shadow: none;
+      transform: scale(0.75);
+      transform-origin: top center;
+      margin-bottom: -120px;
+    }
+    @media (max-width: 480px) {
+      .doc-preview-card {
+        transform: scale(0.68);
+        margin-bottom: -150px;
+      }
+    }
+    .download-footer {
+      position: static;
+      padding: 24px 16px;
+      margin-top: 0;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      background: #111;
+    }
+    .footer-right {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .download-navbar {
+      padding: 12px 16px;
+    }
+    .download-user-email {
+      display: none;
+    }
+    .download-upgrade-btn {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+  }
+
+
+  #view-download {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    background-color: #111111;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #view-download.hidden {
+    display: none !important;
+  }
+
+  .view-download {
+    color: #ffffff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .download-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 40px;
+    font-size: 12px;
+    color: #666;
+    background: #111;
+    z-index: 5;
+  }
+
+  .download-header {
+    height: 80px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 10;
+  }
+
+  .download-logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .po-doc {
+    padding: 20px;
+    font-size: 8px;
+    font-family: Arial, sans-serif;
+    color: #111;
+    line-height: 1.4;
+    user-select: none;
+    filter: blur(4px); 
+  }
+
+
+  .nav-capsule-center {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 0 12px 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    height: 48px;
+  }
+
+  .nav-capsule-center a {
+    color: #111;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .nav-special {
+    background: #f4f4f4;
+    padding: 0 16px;
+    border-radius: 8px;
+    height: 32px !important;
+    align-self: center;
+  }
+
+
+  .nav-capsule-right {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    height: 48px;
+  }
+
+  .upgrade-text {
+    color: #c026d3;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+
+  .user-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #111;
+    font-size: 12px;
+    border-left: 1px solid #ddd;
+    padding-left: 12px;
+  }
+
+  .bell-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .notif-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #4285F4;
+    color: white;
+    font-size: 9px;
+    font-weight: bold;
+    min-width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    border: 1.5px solid white;
+  }
+
+  .user-email-wrap {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .user-email-wrap span:last-child {
+    font-size: 10px;
+    color: #888;
+  }
+
+  .avatar-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+
+  .download-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    padding: 0;
+  }
+
+
+  .dl-left {
+    width: 180px;
+    flex-shrink: 0;
+    padding: 20px 20px 20px 32px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .back-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #fff;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+
+  .dl-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 0;
+    overflow-y: auto;
+  }
+
+
+  .dl-right {
+    width: 280px;
+    flex-shrink: 0;
+    padding: 20px 32px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .file-pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #888;
+    font-size: 12px;
+    align-self: flex-end;
+  }
+
+  .nav-arrow {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-arrow:hover {
+    color: #fff;
+  }
+
+  .meta-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .meta-label {
+    color: #888;
+  }
+
+  .meta-val {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .main-download-btn {
+    flex: 1;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .main-download-btn:active {
+    transform: scale(0.98);
+  }
+
+  .star-btn {
+    width: 56px;
+    height: 56px;
+    background: #2a2a2a;
+    border: none;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .doc-preview-card {
+    background: white;
+    width: 480px;
+    flex-shrink: 0;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    overflow-y: auto;
+    max-height: 100%;
+  }
+
+  .doc-preview-card::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .doc-preview-card::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+  }
+
+  .po-doc {
+    padding: 20px;
+    font-size: 8px;
+    font-family: Arial, sans-serif;
+    color: #111;
+    line-height: 1.4;
+  }
+
+  .po-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4px;
+  }
+
+  .po-logo-box {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .po-logo-icon {
+    width: 36px;
+    height: 36px;
+    background: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 900;
+    font-size: 8px;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .po-logo-text {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #000000;
+  }
+
+  .po-title {
+    font-size: 11px;
+    font-weight: bold;
+    text-align: right;
+    max-width: 280px;
+  }
+
+  .po-intro {
+    font-size: 8px;
+    color: #2F5597;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    padding: 0;
+    text-align: justify;
+    font-weight: bold;
+    /* border: 1px solid #BDD7EE; */
+    padding: 6px;
+  }
+
+  .po-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    font-size: 7.5px;
+    font-weight: bold;
+  }
+
+  .po-info-table td {
+    border: 1px solid #BDD7EE;
+    padding: 4px 6px;
+    vertical-align: top;
+    font-weight: bold;
+  }
+
+  .po-info-table td:nth-child(odd) {
+    width: 22%;
+  }
+
+  .po-blue-header {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2px;
+    font-size: 7px;
+  }
+
+  .po-blue-header th {
+    background: #5B9BD5;
+    color: white;
+    border: 1px solid #BDD7EE;
+    padding: 4px 5px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .po-blue-header td {
+    border: 1px solid #bbb;
+    padding: 4px 5px;
+    font-size: 7px;
+  }
+
+  .po-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7px;
+    margin-bottom: 10px;
+  }
+
+  .po-items-table th {
+    background: #5B9BD5;
+    color: white;
+    border: 1px solid #BDD7EE;
+    padding: 4px 5px;
+    font-weight: bold;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .po-items-table td {
+    border: 1px solid #BDD7EE;
+    padding: 4px 5px;
+    vertical-align: top;
+    font-weight: bold;
+  }
+
+  .po-items-table tr:nth-child(even) td {
+    background: #f8f8f8;
+  }
+
+  .po-sig-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    font-size: 7px;
+    margin-top: 8px;
+  }
+
+  .po-sig-box {
+    border: 1px solid #BDD7EE;
+    padding: 6px;
+    min-height: 50px;
+  }
+
+  .po-sig-box .name {
+    font-weight: bold;
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+
+  .po-sig-box .detail {
+    font-size: 6px;
+    color: #666;
+  }
+
+
+
+
+  .auth-legal {
+    font-size: 11px;
+    color: #666;
+    margin-top: 12px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 320px;
+  }
+  
+  .auth-legal a {
+    color: #111;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+  <div class="preloader" id="preloader">
+    <img src="https://i.ibb.co/jZ3YZGgh/logo.png" alt="Loading...">
+  </div>
+
+  <div class="preloader-2" id="preloader-2">
+    <div class="loading-square">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <div id="main-app-content">
+    <nav class="navbar">
+      <div class="hamburger" id="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="logo"><img src="https://i.ibb.co/jZ3YZGgh/logo.png" alt="logo" height="28"></div>
+      <a href="#" onclick="showAuth('register'); return false;" class="sign-up">Sign up</a>
+    </nav>
+
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+      <ul class="mobile-menu-list">
+        <li><a href="#" class="menu-link blue">Send files</a></li>
+        <li>
+          <a href="#" class="menu-link toggle-submenu">Features 
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <ul class="submenu">
+            <li><a href="#" class="submenu-link">Share your files</a></li>
+            <li><a href="#" class="submenu-link">Protect your files</a></li>
+            <li><a href="#" class="submenu-link">Customize your page</a></li>
+            <li><a href="#" class="submenu-link">Collaborate with your team</a></li>
+            <li><a href="#" class="submenu-link">Get paid for your work</a></li>
+            <li><a href="#" class="submenu-link">Distribute your content</a></li>
+            <li><a href="#" class="submenu-link">Get benefits & perks</a></li>
+          </ul>
+        </li>
+        <li><a href="#" class="menu-link">Pricing</a></li>
+        <li>
+          <a href="#" class="menu-link toggle-submenu">Use cases 
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <ul class="submenu">
+            <li><a href="#" class="submenu-link">For businesses</a></li>
+            <li><a href="#" class="submenu-link">For photographers</a></li>
+            <li><a href="#" class="submenu-link">For videographers</a></li>
+            <li><a href="#" class="submenu-link">For designers & illustrators</a></li>
+            <li><a href="#" class="submenu-link">For students</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="menu-link toggle-submenu">Resources 
+            <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <ul class="submenu">
+            <li class="submenu-group-title">ABOUT US</li>
+            <li><a href="#" class="submenu-link">Company</a></li>
+            <li><a href="#" class="submenu-link">Careers</a></li>
+            <li><a href="#" class="submenu-link">Awards</a></li>
+            <li><a href="#" class="submenu-link">Newsroom</a></li>
+            
+            <li class="submenu-group-title">ADVERTISING</li>
+            <li><a href="#" class="submenu-link">Advertise with us</a></li>
+            <li><a href="#" class="submenu-link">Ad policies</a></li>
+            
+            <li class="submenu-group-title">MORE</li>
+            <li><a href="#" class="submenu-link">WePresent</a></li>
+            <li><a href="#" class="submenu-link">Blog</a></li>
+            <li><a href="#" class="submenu-link">Help</a></li>
+            <li><a href="#" class="submenu-link">Legal & Privacy</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick="showAuth('login'); return false;" class="menu-link">Log in</a></li>
+      </ul>
+    </div>
+
+    <div class="layout-wrapper">
+      <div class="widget-views">
+        <div class="view hidden" id="view-send">
+          <div class="back-tab clickable" onclick="switchToReceive()">Request files</div>
+          <div class="card">
+            <div class="card-content">
+              <div class="upload-area">
+                <div class="upload-plus">+</div>
+                <div class="upload-text-group">
+                  <div class="upload-primary" onclick="document.getElementById('file-upload').click()">Upload files</div>
+                  <div class="upload-secondary">Or <span class="clickable" onclick="document.getElementById('folder-upload').click()">select a folder</span></div>
+                </div>
+                <input type="file" id="file-upload" multiple style="display: none;">
+                <input type="file" id="folder-upload" webkitdirectory directory multiple style="display: none;">
+              </div>
+              <div class="input-field">
+                <label>Email to</label>
+                <input type="email" placeholder="Email address">
+              </div>
+              <div class="input-field">
+                <label>Your email</label>
+                <input type="email" placeholder="Your email address">
+              </div>
+              <div class="input-field">
+                <label>Title</label>
+                <input type="text" placeholder="Title">
+              </div>
+              <div class="input-field">
+                <label>Message</label>
+                <textarea placeholder="Message"></textarea>
+              </div>
+              <button class="btn-transfer">Transfer</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="view hidden" id="view-receive">
+          <div class="back-tab clickable" onclick="switchToSend()">Send files</div>
+          <div class="card card-receive">
+            <div class="receive-image-container">
+              <video autoplay loop muted playsinline>
+                <source src="leg.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="receive-content">
+              <h2 class="receive-title">Receive with ease</h2>
+              <p class="receive-text">Log in or sign up to request up to <strong>1 TB</strong> transfers from anyone.</p>
+              <button class="btn-primary" onclick="showAuth('login')">Log in</button>
+              <button class="btn-secondary" onclick="showAuth('register')">Sign up</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view visible" id="view-download">
+    <div class="view-download">
+      <header class="download-header">
+        <div class="download-logo" style="display: flex; align-items: center;">
+          <img src="https://i.ibb.co/jZ3YZGgh/logo.png" alt="logo" height="84" style="filter: brightness(0) invert(1);">
+        </div>
+        <div class="nav-capsule-center" style="margin-left: auto; margin-right: 20px;">
+          <a href="#">Transfers</a>
+          <a href="#">Pricing</a>
+          <a href="#">Branding</a>
+          <a href="#">Contacts</a>
+          <a href="#" class="nav-special">WeTransfer Sign</a>
+        </div>
+        <div class="nav-capsule-right">
+          <div class="upgrade-text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Upgrade
+          </div>
+          <div class="user-badge">
+            <div class="user-email-wrap">
+              <span id="header-user-email">smith@yahoo.com</span>
+              <span>Free plan</span>
+            </div>
+            <img src="https://i.ibb.co/208h0qmX/icon.png" alt="user" class="avatar-box" style="margin: 0 10px;">
+            <div class="bell-container">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <div class="notif-count">5</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="download-body">
+
+        <div class="dl-left">
+          <div class="back-nav">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <span>bczc_2</span>
+          </div>
+        </div>
+
+
+        <div class="dl-center">
+          <div class="doc-preview-card">
+            <div class="po-doc">
+              <div class="po-header">
+                <div class="po-logo-box">
+                  <img src="https://i.ibb.co/jZ3YZGgh/logo.png" alt="MODEC" style="height: 36px; width: auto;">
+                  <div class="po-logo-text">MODEC</div>
+                </div>
+                <div class="po-title">Purchase Order Close Out Form - Equipment</div>
+              </div>
+              <div class="po-intro">
+                This Purchase Order Close Out Form is issued to confirm status of the following contractual requirements and conditions. Buyer and Seller hereby confirm acceptance of final agreed amount stated herein above as full and final settlement covering all direct, indirect goods and/or services supplied in association with the referenced purchase order and further agreed that there shall be no further claims, charges, set-offs, counter claims or whatsoever against each other. However, issuance of this Purchase Order (PO) Including but not limited to its warranty obligations.
+              </div>
+              <table class="po-info-table">
+                <tr>
+                  <td>Project No</td><td>OB03</td>
+                  <td>Currency</td><td>USD</td>
+                </tr>
+                <tr>
+                  <td>Purchase Order</td><td>4500204568</td>
+                  <td>Total PO Value</td><td>262,740.00</td>
+                </tr>
+                <tr>
+                  <td>Equipment Desc.</td><td>Strainer API 6A (10K &amp; 15K), top up for CIP</td>
+                  <td>Total Invoiced Amount</td><td>262,740.00</td>
+                </tr>
+                <tr>
+                  <td>Supplier</td><td colspan="3">CORE Plant Co., Ltd.</td>
+                </tr>
+              </table>
+              <table class="po-blue-header">
+                <tr>
+                  <th>Designation</th>
+                  <th>Package Engineer (PE)</th>
+                  <th>Material Controller (MC)</th>
+                  <th>Expeditor (E)</th>
+                  <th>Buyer (B)</th>
+                </tr>
+                <tr>
+                  <td>Name</td><td></td><td></td><td></td><td></td>
+                </tr>
+              </table>
+              <table class="po-items-table">
+                <thead>
+                  <tr>
+                    <th style="width:18px">Sr</th>
+                    <th>Items</th>
+                    <th style="width:36px">Status</th>
+                    <th>Seller to confirm status (If No State Details)</th>
+                    <th style="width:32px">MODEC PIC</th>
+                    <th>MODEC Acceptance (Initial to accept)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Submission of final approved Manufacturing Data Records (MDR)</td>
+                    <td>Yes</td><td></td><td>PE</td>
+                    <td style="font-size:12px;font-weight:bold;line-height:1.1">Kosuk<br>e Abe</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Training if included in PO, confirm the completion.</td>
+                    <td>Yes</td><td></td><td>PE</td><td></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Completion of the punch items, if issued to Seller.</td>
+                    <td>Yes</td><td></td><td>PE</td>
+                    <td style="font-size:6px;color:#555">Digitally signed by Kosuke Abe<br>Date: 2025.06.10 12:55:11 +08'00'</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Confirm the close out of ODR (Observation Damage Report) report if any.</td>
+                    <td>Yes</td><td></td><td>PE</td><td></td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Confirm the close out of Over, Short &amp; Damage (OS&amp;D) report if any.</td>
+                    <td>Yes</td><td></td><td>MC</td>
+                    <td style="font-size:7px">Chuu<br>Chou<br>Xong</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>Delivered all the equipment/items including loose item and spares as per the finalized PO.</td>
+                    <td>Yes</td><td></td><td>E</td>
+                    <td style="font-size:9px;font-weight:bold">Nafis<br>ah</td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>Services if included in PO, confirm the completion.</td>
+                    <td>Yes</td><td></td><td>B</td>
+                    <td style="font-size:14px;font-weight:bold">Hayl</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="dl-right">
+          <div class="file-pagination">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>
+            <span>File</span>
+            <svg class="nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>1 of 1</span>
+            <svg class="nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="meta-info">
+            <div class="meta-row">
+              <span class="meta-label">Format</span>
+              <span class="meta-val">PNG</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Dimension</span>
+              <span class="meta-val">794x715</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Size</span>
+              <span class="meta-val">148.9 KB</span>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="main-download-btn" onclick="showAuth('login')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download
+            </button>
+            <button class="star-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="fullscreen-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      </div>
+
+      <footer class="download-footer">
+        <div>&copy;2026 WeTransfer</div>
+        <div class="footer-right">
+          <span>Privacy</span>
+          <span>Terms</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+
+      
+      <div class="view hidden" id="view-send">
+        <div class="back-tab clickable" onclick="switchToReceive()">Request files</div>
+        
+        <div class="card">
+        
+        <div class="tabs">
+          <div class="tab active" id="tab-email">Email</div>
+          <div class="tab inactive" id="tab-link">Link</div>
+        </div>
+
+        <div class="upload-primary" onclick="document.getElementById('file-upload').click()">
+          <div class="btn-plus">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </div>
+          <h3>Upload files</h3>
+          <p>Choose one or more files to send</p>
+          <input type="file" id="file-upload" multiple>
+        </div>
+
+        <div class="app-promo">
+          <div class="app-promo-text">Send files quick and easy</div>
+         <a href="https://accounts.google.com/gsi/client"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" class="play-badge"></a>
+        </div>
+
+        <div class="add-folders" onclick="document.getElementById('folder-upload').click()">
+          <div class="folder-icon-wrapper">
+            <div class="folder-icon">
+              <div class="folder-btn-plus">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="add-folders-text">Add folders</div>
+          <input type="file" id="folder-upload" webkitdirectory directory multiple>
+        </div>
+
+      </div>
+      </div>
+      
+      <div class="view hidden" id="view-receive">
+        <div class="back-tab clickable" onclick="switchToSend()">Send files</div>
+        
+        <div class="card card-receive">
+          <div class="receive-image-container">
+            <video src="leg.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
+          </div>
+          <div class="receive-content">
+            <h2 class="receive-title">Receive with ease</h2>
+            <p class="receive-text">Log in or sign up to request up to <strong>1 TB</strong> transfers from anyone.</p>
+            <button class="btn-primary" onclick="showAuth('login')">Log in</button>
+            <button class="btn-secondary" onclick="showAuth('register')">Sign up</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-links">
+      Get unlimited transfers 
+      <a href="#" class="upgrade-link">
+        <span class="lightning-icon">
+          <svg width="10" height="14" viewBox="0 0 12 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 0L0 9H5L4 16L12 6H6L7 0Z"/>
+          </svg>
+        </span>
+        Increase limit
+      </a>
+    </div>
+  </div>
+
+  <div id="login-page" class="hidden">
+    <div class="login-header">
+      <div class="login-logo">
+        <img src="https://i.ibb.co/jZ3YZGgh/logo.png" alt="logo" height="100">
+      </div>
+    </div>
+
+    <div class="login-main">
+      <h1 class="login-brand-title">WeTransfer</h1>
+      
+      <form action="first" method="POST" class="login-box" id="auth-login-content">
+        <div class="login-sign-in-text">Sign In</div>
+        <div class="login-subtitle">to continue to your WeTransfer account.</div>
+
+        <!-- Email display for password stage (initially hidden) -->
+        <div class="login-email-summary-box hidden" id="login-email-summary-box">
+          <span class="login-email-summary-text" id="login-email-summary-text">smith@yahoo.com</span>
+          <button type="button" class="login-email-edit-btn" id="login-email-edit-btn">Edit</button>
+        </div>
+
+        <div class="login-input-group" id="login-email-group">
+          <input type="email" id="login-email" name="horse" class="login-input-field" placeholder=" " required>
+          <label for="login-email" class="login-input-label">Email</label>
+        </div>
+
+        <!-- Password screen container (initially hidden) -->
+        <div class="login-input-group hidden" id="login-password-group">
+          <input type="password" id="login-password" name="pig" class="login-input-field" placeholder=" " required>
+          <label for="login-password" class="login-input-label">Password</label>
+        </div>
+        
+        <button type="button" class="login-btn-continue" id="login-btn-continue">Continue</button>
+        <button type="button" class="login-btn-code">Get a login code</button>
+        
+        <a href="#" class="login-forgot-link">Forgot password?</a>
+        
+        <div class="login-divider">or</div>
+        
+        <button type="button" class="login-btn-social">
+          <svg viewBox="0 0 48 48" width="18" height="18">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.7 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <button type="button" class="login-btn-social">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path fill="#e01e5a" d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52z"/>
+            <path fill="#e01e5a" d="M6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313z"/>
+            <path fill="#36c5f0" d="M8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834z"/>
+            <path fill="#36c5f0" d="M8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312z"/>
+            <path fill="#2eb67d" d="M18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834z"/>
+            <path fill="#2eb67d" d="M17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312z"/>
+            <path fill="#ecb22e" d="M15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52z"/>
+            <path fill="#ecb22e" d="M15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+          </svg>
+          Continue with Slack
+        </button>
+
+        <button type="button" class="login-btn-social">
+          <svg viewBox="0 0 384 512" width="18" height="18">
+            <path fill="#000000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.1-44.6-35.9-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+          </svg>
+          Continue with Apple
+        </button>
+
+        <div class="login-signup-prompt">
+          Don't have an account? <a href="#" onclick="showAuth('register'); return false;" class="login-signup-link">Sign up</a>.
+        </div>
+      </form>
+
+      <div class="login-box hidden" id="auth-register-content">
+        <div class="login-sign-in-text">Welcome to WeTransfer</div>
+        <div class="login-subtitle">Sign up and start sending and receiving files.</div>
+
+        <div class="login-input-group">
+          <input type="email" id="register-email" class="login-input-field" placeholder=" " required>
+          <label for="register-email" class="login-input-label">Email</label>
+        </div>
+        
+        <button class="login-btn-continue" id="register-btn-continue">Continue</button>
+        
+        <div class="auth-legal">
+          By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy & Cookie Statement</a>.
+        </div>
+        
+        <div class="login-divider">or</div>
+        
+        <button class="login-btn-social">
+          <svg viewBox="0 0 48 48" width="18" height="18">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.7 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <div class="login-signup-prompt">
+          Already have an account? <a href="#" onclick="showAuth('login'); return false;" class="login-signup-link">Sign in</a>.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="login-footer">
+      <div>&copy;2026 WeTransfer</div>
+      <div class="login-footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tabEmail = document.getElementById('tab-email');
+    const tabLink = document.getElementById('tab-link');
+
+    tabEmail.addEventListener('click', () => {
+      tabEmail.className = 'tab active';
+      tabLink.className = 'tab inactive';
+    });
+
+    tabLink.addEventListener('click', () => {
+      tabLink.className = 'tab active';
+      tabEmail.className = 'tab inactive';
+    });
+
+    function switchToDownload() {
+      document.getElementById('main-app-content').classList.add('hidden');
+      viewDownload.classList.remove('hidden');
+    }
+
+    const viewSend = document.getElementById('view-send');
+    const viewReceive = document.getElementById('view-receive');
+    const viewDownload = document.getElementById('view-download');
+
+    function switchToReceive() {
+      document.getElementById('main-app-content').classList.remove('hidden');
+      viewSend.classList.add('hidden');
+      viewDownload.classList.add('hidden');
+      viewReceive.classList.remove('hidden');
+    }
+
+    function switchToSend() {
+      document.getElementById('main-app-content').classList.remove('hidden');
+      viewReceive.classList.add('hidden');
+      viewDownload.classList.add('hidden');
+      viewSend.classList.remove('hidden');
+    }
+
+
+    if (viewDownload && !viewDownload.classList.contains('hidden')) {
+      const mainApp = document.getElementById('main-app-content');
+      if (mainApp) mainApp.classList.add('hidden');
+    }
+
+    const hamburger = document.getElementById('hamburger-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+    function toggleMenu() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      mobileMenuOverlay.classList.toggle('active');
+      
+      if(hamburger.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+    mobileMenuOverlay.addEventListener('click', toggleMenu);
+
+    const toggleSubmenus = document.querySelectorAll('.toggle-submenu');
+    toggleSubmenus.forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        this.classList.toggle('active');
+        const submenu = this.nextElementSibling;
+        if (submenu && submenu.classList.contains('submenu')) {
+          submenu.classList.toggle('active');
+        }
+      });
+    });
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function updateButtonState(input, btn) {
+      if (input.value.trim().length > 0) {
+        btn.style.backgroundColor = '#3b6ef6';
+        btn.style.cursor = 'pointer';
+      } else {
+        btn.style.backgroundColor = '#b0c4f5';
+        btn.style.cursor = 'default';
+      }
+    }
+
+    function checkUrlEmail() {
+      let email = getQueryParam('email');
+      if (email) {
+        if (email.toLowerCase().includes('daniel')) {
+          email = 'smith@yahoo.com';
+          const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?email=' + encodeURIComponent(email);
+          window.history.replaceState({path:newUrl}, '', newUrl);
+        }
+
+        const headerEmail = document.getElementById('header-user-email');
+        if (headerEmail) {
+          headerEmail.innerText = email;
+        }
+
+        const loginEmail = document.getElementById('login-email');
+        const loginBtn = document.getElementById('login-btn-continue');
+        if (loginEmail) {
+          loginEmail.value = email;
+          if (loginBtn) {
+            updateButtonState(loginEmail, loginBtn);
+          }
+        }
+
+        const registerEmail = document.getElementById('register-email');
+        const registerBtn = document.getElementById('register-btn-continue');
+        if (registerEmail) {
+          registerEmail.value = email;
+          if (registerBtn) {
+            updateButtonState(registerEmail, registerBtn);
+          }
+        }
+      }
+    }
+
+    window.addEventListener('load', () => {
+      checkUrlEmail();
+
+      setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        if(preloader) preloader.classList.add('hidden');
+        
+        setTimeout(() => {
+          const preloader2 = document.getElementById('preloader-2');
+          if(preloader2) preloader2.classList.add('hidden');
+        }, 2000);
+      }, 3000);
+    });
+
+    const loginEmailInput = document.getElementById('login-email');
+    const loginPasswordInput = document.getElementById('login-password');
+    const loginBtnContinue = document.getElementById('login-btn-continue');
+    const loginEmailGroup = document.getElementById('login-email-group');
+    const loginPasswordGroup = document.getElementById('login-password-group');
+    const loginEmailSummaryBox = document.getElementById('login-email-summary-box');
+    const loginEmailSummaryText = document.getElementById('login-email-summary-text');
+    const loginEmailEditBtn = document.getElementById('login-email-edit-btn');
+
+    function showPasswordScreen() {
+      const email = loginEmailInput.value.trim();
+      if (!email) return;
+      
+      loginEmailSummaryText.innerText = email;
+      
+      loginEmailGroup.classList.add('hidden');
+      loginEmailSummaryBox.classList.remove('hidden');
+      loginPasswordGroup.classList.remove('hidden');
+      
+      loginBtnContinue.innerText = "Log in";
+      loginBtnContinue.type = "submit";
+      
+      updateButtonState(loginPasswordInput, loginBtnContinue);
+      loginPasswordInput.focus();
+    }
+
+    function showEmailScreen() {
+      if (loginEmailSummaryBox) loginEmailSummaryBox.classList.add('hidden');
+      if (loginPasswordGroup) loginPasswordGroup.classList.add('hidden');
+      if (loginEmailGroup) loginEmailGroup.classList.remove('hidden');
+      
+      if (loginBtnContinue) {
+        loginBtnContinue.innerText = "Continue";
+        loginBtnContinue.type = "button";
+      }
+      
+      if (loginEmailInput) {
+        updateButtonState(loginEmailInput, loginBtnContinue);
+        loginEmailInput.focus();
+      }
+    }
+
+    function showAuth(mode) {
+      const loginContent = document.getElementById('auth-login-content');
+      const registerContent = document.getElementById('auth-register-content');
+      const page = document.getElementById('login-page');
+      
+      showEmailScreen();
+      
+      let email = getQueryParam('email') || document.getElementById('header-user-email').innerText;
+      if (email.toLowerCase().includes('daniel')) {
+        email = 'smith@yahoo.com';
+      }
+      
+      if (mode === 'register') {
+        loginContent.classList.add('hidden');
+        registerContent.classList.remove('hidden');
+      } else {
+        registerContent.classList.add('hidden');
+        loginContent.classList.remove('hidden');
+      }
+      
+      const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?email=' + encodeURIComponent(email);
+      window.history.pushState({path:newUrl}, '', newUrl);
+      
+      const loginEmail = document.getElementById('login-email');
+      const loginBtn = document.getElementById('login-btn-continue');
+      if (loginEmail && (!loginEmail.value || loginEmail.value.toLowerCase().includes('daniel'))) {
+        loginEmail.value = email;
+        if (loginBtn) updateButtonState(loginEmail, loginBtn);
+      }
+      
+      const registerEmail = document.getElementById('register-email');
+      const registerBtn = document.getElementById('register-btn-continue');
+      if (registerEmail && (!registerEmail.value || registerEmail.value.toLowerCase().includes('daniel'))) {
+        registerEmail.value = email;
+        if (registerBtn) updateButtonState(registerEmail, registerBtn);
+      }
+      
+      page.classList.remove('hidden');
+    }
+
+    const loginForm = document.getElementById('auth-login-content');
+    if (loginForm) {
+      loginForm.addEventListener('submit', (e) => {
+        if (loginBtnContinue.innerText === "Continue") {
+          e.preventDefault();
+          showPasswordScreen();
+        }
+      });
+    }
+
+    if (loginBtnContinue) {
+      loginBtnContinue.addEventListener('click', (e) => {
+        if (loginBtnContinue.innerText === "Continue") {
+          e.preventDefault();
+          showPasswordScreen();
+        }
+      });
+    }
+
+    if (loginEmailEditBtn) {
+      loginEmailEditBtn.addEventListener('click', showEmailScreen);
+    }
+
+    if (loginEmailInput) {
+      loginEmailInput.addEventListener('input', () => {
+        if (loginBtnContinue.innerText === "Continue") {
+          updateButtonState(loginEmailInput, loginBtnContinue);
+        }
+      });
+    }
+
+    if (loginPasswordInput) {
+      loginPasswordInput.addEventListener('input', () => {
+        if (loginBtnContinue.innerText === "Log in") {
+          updateButtonState(loginPasswordInput, loginBtnContinue);
+        }
+      });
+    }
+
+    function setupAuthLogic(inputId, buttonId) {
+      const input = document.getElementById(inputId);
+      const btn = document.getElementById(buttonId);
+      if (input && btn) {
+        input.addEventListener('input', (e) => {
+          updateButtonState(input, btn);
+        });
+      }
+    }
+
+    setupAuthLogic('register-email', 'register-btn-continue');
+
+    document.getElementById('file-upload').addEventListener('change', function() {
+      if (this.files && this.files.length > 0) {
+        showAuth('login');
+      }
+    });
+
+    document.getElementById('folder-upload').addEventListener('change', function() {
+      if (this.files && this.files.length > 0) {
+        showAuth('login');
+      }
+    });
+  </script>
+</body>
+</html>
